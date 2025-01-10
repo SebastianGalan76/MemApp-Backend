@@ -42,6 +42,11 @@ public class AuthenticationController {
         return activeAccountService.activeAccount(code);
     }
 
+    @PostMapping("/activeAccount")
+    public ResponseEntity<Response> sendVerificationEmail(@RequestParam String email) {
+        return activeAccountService.sendVerificationEmail(email);
+    }
+
     @PostMapping("/resetPassword")
     public ResponseEntity<Response> resetPassword(@RequestParam String email) {
         return resetPasswordService.resetPassword(email);

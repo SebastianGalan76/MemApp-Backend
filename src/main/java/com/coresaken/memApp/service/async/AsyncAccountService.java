@@ -24,4 +24,13 @@ public class AsyncAccountService {
             e.printStackTrace();
         }
     }
+
+    @Async
+    public void sendVerificationEmail(String email, String activeAccountToken) {
+        try {
+            emailSenderService.sendActiveAccountEmail(email, activeAccountToken);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -57,7 +57,7 @@ public class EmailSenderService {
         mailSender.send(message);
     }
     public void sendResetPasswordEmail(String to, String token) throws MessagingException {
-        String resetPasswordLink = websiteAddress+"auth/resetPassword?token=" + token;
+        String resetPasswordLink = websiteAddress+"auth/changePassword?token=" + token;
 
         String resetPasswordEmail = "<html>"
                 + "<body style='margin: 0; padding: 0; font-size: 1.2em; background-color: #e9e9e9; font-family: system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Oxygen, Ubuntu, Cantarell, \'Open Sans\', \'Helvetica Neue\', sans-serif;'>"
