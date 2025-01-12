@@ -3,7 +3,7 @@ package com.coresaken.memApp.auth.controller;
 import com.coresaken.memApp.auth.dto.request.ChangePasswordDto;
 import com.coresaken.memApp.auth.dto.request.SignInRequestDto;
 import com.coresaken.memApp.auth.dto.request.SignUpRequestDto;
-import com.coresaken.memApp.auth.dto.response.TokenResponse;
+import com.coresaken.memApp.auth.dto.response.SignInResponse;
 import com.coresaken.memApp.auth.service.*;
 import com.coresaken.memApp.data.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class AuthenticationController {
     private final ResetPasswordService resetPasswordService;
 
     @PostMapping("/signIn")
-    public ResponseEntity<TokenResponse> signIn(@RequestBody SignInRequestDto request){
+    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequestDto request){
         return signInService.signIn(request);
     }
 

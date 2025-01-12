@@ -9,6 +9,7 @@ import com.coresaken.memApp.service.async.AsyncAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class ActiveAccountService {
     private final AsyncAccountService asyncAccountService;
     private final UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<Response> activeAccount(String code){
         activeAccountTokenRepository.deleteByToken(code);
         return Response.ok("Konto zostało prawidłowo aktywowane");

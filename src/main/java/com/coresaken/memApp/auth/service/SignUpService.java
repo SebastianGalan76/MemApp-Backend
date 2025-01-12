@@ -1,7 +1,7 @@
 package com.coresaken.memApp.auth.service;
 
 import com.coresaken.memApp.auth.dto.request.SignUpRequestDto;
-import com.coresaken.memApp.auth.dto.response.TokenResponse;
+import com.coresaken.memApp.auth.dto.response.SignInResponse;
 import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.repository.UserRepository;
@@ -56,7 +56,7 @@ public class SignUpService {
         try {
             userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
-            return TokenResponse.badRequest(5, "Login lub email jest już zajęty!");
+            return SignInResponse.badRequest(5, "Login lub email jest już zajęty!");
         }
 
         String activeAccountToken = UUID.randomUUID().toString();

@@ -1,7 +1,7 @@
 package com.coresaken.memApp.auth;
 
 import com.coresaken.memApp.auth.dto.request.SignInRequestDto;
-import com.coresaken.memApp.auth.dto.response.TokenResponse;
+import com.coresaken.memApp.auth.dto.response.SignInResponse;
 import com.coresaken.memApp.auth.service.JwtService;
 import com.coresaken.memApp.auth.service.SignInService;
 import com.coresaken.memApp.data.response.Response;
@@ -51,7 +51,7 @@ public class SignInServiceTest {
 
         when(userRepository.findByEmailOrLogin(identifier, identifier)).thenReturn(Optional.empty());
 
-        ResponseEntity<TokenResponse> responseEntity = signInService.signIn(signUpRequestDto);
+        ResponseEntity<SignInResponse> responseEntity = signInService.signIn(signUpRequestDto);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
         Response response = responseEntity.getBody();
@@ -67,7 +67,7 @@ public class SignInServiceTest {
 
         when(userRepository.findByEmailOrLogin(identifier, identifier)).thenReturn(Optional.of( new User()));
 
-        ResponseEntity<TokenResponse> responseEntity = signInService.signIn(signUpRequestDto);
+        ResponseEntity<SignInResponse> responseEntity = signInService.signIn(signUpRequestDto);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
         Response response = responseEntity.getBody();
@@ -88,7 +88,7 @@ public class SignInServiceTest {
         when(passwordEncoder.matches(password, "encodedPassword")).thenReturn(true);
         when(activeAccountTokenRepository.findByUserId(user.getId())).thenReturn(Optional.of(new ActiveAccountToken()));
 
-        ResponseEntity<TokenResponse> responseEntity = signInService.signIn(signUpRequestDto);
+        ResponseEntity<SignInResponse> responseEntity = signInService.signIn(signUpRequestDto);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
         Response response = responseEntity.getBody();
@@ -113,10 +113,10 @@ public class SignInServiceTest {
 
         when(jwtService.generateToken(user)).thenReturn(generatedToken);
 
-        ResponseEntity<TokenResponse> responseEntity = signInService.signIn(signUpRequestDto);
+        ResponseEntity<SignInResponse> responseEntity = signInService.signIn(signUpRequestDto);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-        TokenResponse response = responseEntity.getBody();
+        SignInResponse response = responseEntity.getBody();
         assertNotNull(response);
         assertEquals(-1, response.getErrorCode());
         assertEquals(generatedToken, response.getToken());

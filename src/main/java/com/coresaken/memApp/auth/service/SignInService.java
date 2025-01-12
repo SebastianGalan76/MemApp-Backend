@@ -1,7 +1,8 @@
 package com.coresaken.memApp.auth.service;
 
 import com.coresaken.memApp.auth.dto.request.SignInRequestDto;
-import com.coresaken.memApp.auth.dto.response.TokenResponse;
+import com.coresaken.memApp.auth.dto.response.SignInResponse;
+import com.coresaken.memApp.data.mapper.UserDtoMapper;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.repository.auth.ActiveAccountTokenRepository;
 import com.coresaken.memApp.database.repository.UserRepository;
@@ -22,20 +23,20 @@ public class SignInService {
     private final UserRepository userRepository;
     private final ActiveAccountTokenRepository activeAccountTokenRepository;
 
-    public ResponseEntity<TokenResponse> signIn(SignInRequestDto request) {
+    public ResponseEntity<SignInResponse> signIn(SignInRequestDto request) {
         String identifier = request.identifier();
 
         User user = userRepository.findByEmailOrLogin(identifier, identifier).orElse(null);
         if (user == null) {
-            return TokenResponse.badRequestToken(1, "Niepoprawne dane logowania!");
+            return SignInResponse.badRequestToken(1, "Niepoprawne dane logowania!");
         }
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            return TokenResponse.badRequestToken(2, "Niepoprawne dane logowania!");
+            return SignInResponse.badRequestToken(2, "Niepoprawne dane logowania!");
         }
 
         if (activeAccountTokenRepository.findByUserId(user.getId()).isPresent()) {
-            return TokenResponse.badRequestToken(3, "Konto nie zostało aktywowane. Wyszukaj email i aktywuj konto!");
+            return SignInResponse.badRequestToken(3, "Konto nie zostało aktywowane. Wyszukaj email i aktywuj konto!");
         }
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -45,6 +46,6 @@ public class SignInService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        return TokenResponse.ok("Zalogowano prawidłowo", jwtToken);
+        return SignInResponse.ok("Zalogowano prawidłowo", jwtToken, UserDtoMapper.toDTO(user));
     }
 }

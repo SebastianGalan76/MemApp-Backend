@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class ResetPasswordService {
     private final UserRepository userRepository;
     private final ResetPasswordTokenRepository resetPasswordTokenRepository;
 
+    @Transactional
     public ResponseEntity<Response> resetPassword(String email){
         User user = userRepository.findByEmail(email).orElse(null);
         if(user==null){
@@ -55,6 +57,7 @@ public class ResetPasswordService {
         return Response.ok("Link resetujący hasło wysłaliśmy na podany adres e-mail");
     }
 
+    @Transactional
     public ResponseEntity<Response> changePassword(@RequestParam String token, @RequestParam String newPassword) {
         if(newPassword.length()<4){
             return Response.badRequest(3,"Hasło jest zbyt krótkie");
