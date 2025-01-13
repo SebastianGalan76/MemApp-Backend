@@ -104,9 +104,11 @@ public class SignInServiceTest {
 
         SignInRequestDto signUpRequestDto = new SignInRequestDto(identifier, password);
 
-        User user = mock(User.class);
+        User user = new User();
+        user.setPassword("encodedPassword");
+        user.setRole(User.Role.USER);
+
         when(userRepository.findByEmailOrLogin(identifier, identifier)).thenReturn(Optional.of(user));
-        when(user.getPassword()).thenReturn("encodedPassword");
 
         when(passwordEncoder.matches(password, "encodedPassword")).thenReturn(true);
         when(activeAccountTokenRepository.findByUserId(user.getId())).thenReturn(Optional.empty());
