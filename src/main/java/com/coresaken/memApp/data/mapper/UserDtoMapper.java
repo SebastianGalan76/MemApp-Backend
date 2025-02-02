@@ -2,13 +2,18 @@ package com.coresaken.memApp.data.mapper;
 
 import com.coresaken.memApp.data.UserDto;
 import com.coresaken.memApp.database.model.User;
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class UserDtoMapper {
+    @Nullable
     public static UserDto toDTO(User user){
+        if(user == null){
+            return null;
+        }
         UserDto userDto = new UserDto();
 
         userDto.setId(user.getId());

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -74,6 +76,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+            else{
+                Optional<Cookie> currentJwtCookie = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("jwt_token")).findFirst();
+
+                if(currentJwtCookie.isPresent()){
+                    Cookie deleteCookie = new Cookie("jwt_token", "");
+                    deleteCookie.setPath(currentJwtCookie.get().getPath());
+                    deleteCookie.setMaxAge(0);
+                    response.addCookie(deleteCookie);
+                }
             }
         }
         filterChain.doFilter(request, response);
