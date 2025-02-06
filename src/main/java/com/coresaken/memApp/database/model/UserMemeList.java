@@ -1,9 +1,11 @@
 package com.coresaken.memApp.database.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserMemeList {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
@@ -28,10 +31,12 @@ public class UserMemeList {
 
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    @ToString.Exclude
     User owner;
 
     public enum Accessibility{
-        PUBLIC,  NON_PUBLIC, PRIVATE;
+        PUBLIC,  NOT_PUBLIC, PRIVATE;
     }
 }
 

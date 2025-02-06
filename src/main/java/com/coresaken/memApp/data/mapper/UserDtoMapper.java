@@ -20,6 +20,8 @@ public class UserDtoMapper {
         userDto.setLogin(user.getLogin());
         userDto.setEmail(user.getEmail());
         userDto.setRole(user.getRole().toString());
+
+        userDto.setOwnedMemeLists(user.getOwnedMemeList());
         return userDto;
     }
 }

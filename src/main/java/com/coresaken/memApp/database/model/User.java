@@ -33,8 +33,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<UserMemeList> ownedMemeList = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    List<UserMemeList> ownedMemeList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
