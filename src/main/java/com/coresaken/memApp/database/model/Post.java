@@ -21,7 +21,7 @@ public class Post {
     User user;
 
     @Column(length = 15)
-    String creatorIP;
+    String creatorIp;
 
     String text;
     String content;
