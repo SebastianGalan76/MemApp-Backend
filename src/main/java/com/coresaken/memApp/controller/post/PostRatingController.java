@@ -1,7 +1,7 @@
-package com.coresaken.memApp.controller;
+package com.coresaken.memApp.controller.post;
 
 import com.coresaken.memApp.data.response.Response;
-import com.coresaken.memApp.service.PostRatingService;
+import com.coresaken.memApp.service.post.PostRatingService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

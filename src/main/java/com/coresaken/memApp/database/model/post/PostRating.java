@@ -1,5 +1,6 @@
-package com.coresaken.memApp.database.model;
+package com.coresaken.memApp.database.model.post;
 
+import com.coresaken.memApp.database.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

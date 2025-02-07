@@ -1,7 +1,7 @@
-package com.coresaken.memApp.database.repository;
+package com.coresaken.memApp.database.repository.post;
 
-import com.coresaken.memApp.database.model.Post;
-import com.coresaken.memApp.database.model.PostRating;
+import com.coresaken.memApp.database.model.post.Post;
+import com.coresaken.memApp.database.model.post.PostRating;
 import com.coresaken.memApp.database.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

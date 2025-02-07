@@ -1,10 +1,11 @@
-package com.coresaken.memApp.service;
+package com.coresaken.memApp.service.post;
 
 import com.coresaken.memApp.data.response.Response;
-import com.coresaken.memApp.database.model.Post;
-import com.coresaken.memApp.database.model.PostRating;
+import com.coresaken.memApp.database.model.post.Post;
+import com.coresaken.memApp.database.model.post.PostRating;
 import com.coresaken.memApp.database.model.User;
-import com.coresaken.memApp.database.repository.PostRatingRepository;
+import com.coresaken.memApp.database.repository.post.PostRatingRepository;
+import com.coresaken.memApp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

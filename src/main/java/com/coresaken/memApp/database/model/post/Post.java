@@ -1,5 +1,6 @@
-package com.coresaken.memApp.database.model;
+package com.coresaken.memApp.database.model.post;
 
+import com.coresaken.memApp.database.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,28 +15,27 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @Column(length = 15)
-    String creatorIp;
+    private String creatorIp;
 
-    String text;
-    String content;
+    private String text;
+    private String content;
 
     @Enumerated(EnumType.STRING)
-    Type type;
+    private Type type;
     @Enumerated(EnumType.STRING)
-    Visibility visibility;
+    private Visibility visibility;
 
-    boolean contentSpoiler;
-    boolean contentNSFW;
+    private boolean contentSpoiler;
+    private boolean contentNSFW;
 
-    LocalDateTime createdAt;
-
+    private LocalDateTime createdAt;
 
     public enum Type{
         PHOTO, EMBEDDED_TIKTOK, EMBEDDED_INSTAGRAM, EMBEDDED_X;
