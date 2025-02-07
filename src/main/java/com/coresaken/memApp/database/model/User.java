@@ -33,6 +33,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     List<UserMemeList> ownedMemeList;
 
