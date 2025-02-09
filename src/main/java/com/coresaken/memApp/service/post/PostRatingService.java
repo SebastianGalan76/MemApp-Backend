@@ -28,7 +28,7 @@ public class PostRatingService {
 
         Post post = postService.findById(postId).orElse(null);
         if(post == null){
-            return Response.badRequest(1, "Brak postu o podanym identyfikatorze.");
+            return Response.badRequest(1, "Brak postu o podanym identyfikatorze. Możliwe, że post został usunięty.");
         }
 
         User user = userService.getLoggedInUser();
