@@ -46,6 +46,7 @@ public class NewPostService {
             }
             else{
                 //TODO Download and save file
+                post.setContent(newPostDto.content());
             }
         }
 

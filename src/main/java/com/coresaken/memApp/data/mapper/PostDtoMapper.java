@@ -6,6 +6,8 @@ import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.model.post.PostRating;
 import jakarta.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PostDtoMapper {
@@ -25,6 +27,9 @@ public class PostDtoMapper {
         postDto.setVisibility(post.getVisibility());
         postDto.setCreatedAt(post.getCreatedAt());
 
+        postDto.setRating(post.getPostRatingList().stream().mapToInt(PostRating::getRatingValue).sum());
+
+        PostDto.UserDto userDto = new PostDto.UserDto();
         Optional<PostRating> postRatingOptional = post.getPostRatingList().stream().filter(postRating -> {
             if(postRating.getUser().equals(user)){
                 return true;
@@ -33,15 +38,21 @@ public class PostDtoMapper {
                 return postRating.getUserIp().equals(userIp);
             }
         }).findFirst();
-        postRatingOptional.ifPresent(postRating -> postDto.setUserRating(postRating.getRatingValue()));
+        postRatingOptional.ifPresent(postRating -> userDto.setRating(postRating.getRatingValue()));
 
         if(user != null){
+            List<Long> postListIds = new ArrayList<>();
+
             post.getUserPostList().forEach(postList -> {
                 if(postList.getSavedPosts().contains(post)){
-                    postDto.getSavedUserListId().add(postList.getId());
+                    postListIds.add(postList.getId());
                 }
             });
+
+            userDto.setPostListIds(postListIds);
         }
+
+        postDto.setUser(userDto);
 
         return postDto;
     }

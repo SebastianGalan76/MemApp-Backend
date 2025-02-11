@@ -5,7 +5,6 @@ import com.coresaken.memApp.database.model.post.Post;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,13 +20,20 @@ public class PostDto {
 
     LocalDateTime createdAt;
 
-    byte userRating;
+    int rating;
 
-    List<Long> savedUserListId = new ArrayList<>();
+    UserDto user;
 
     public void setOwner(User user) {
         this.owner = new OwnerDto(user.getId(), user.getLogin());
     }
+
+    @Data
+    public static class UserDto {
+        byte rating;
+        List<Long> postListIds;
+    }
+
 
     @Data
     public static class OwnerDto {
