@@ -1,12 +1,15 @@
 package com.coresaken.memApp.database.model.post;
 
 import com.coresaken.memApp.database.model.User;
+import com.coresaken.memApp.database.model.UserPostList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -38,6 +41,12 @@ public class Post {
     private boolean contentNSFW;
 
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostRating> postRatingList;
+
+    @ManyToMany(mappedBy = "savedPosts")
+    private List<UserPostList> userPostList = new ArrayList<>();
 
     public enum Type{
         IMAGE, EMBEDDED_TIKTOK, EMBEDDED_INSTAGRAM, EMBEDDED_X;

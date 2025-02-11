@@ -1,63 +1,28 @@
 package com.coresaken.memApp.service.post;
 
-import com.coresaken.memApp.data.dto.NewPostDto;
-import com.coresaken.memApp.data.response.Response;
+import com.coresaken.memApp.data.dto.PostDto;
+import com.coresaken.memApp.data.mapper.PostDtoMapper;
+import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.post.PostRepository;
 import com.coresaken.memApp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     final UserService userService;
 
-    final PostRepository repository;
+    final PostRepository postRepository;
 
-    public ResponseEntity<Response> createPost(NewPostDto newPostDto, MultipartFile contentFile, HttpServletRequest request) {
-        if(newPostDto.text() != null && newPostDto.text().length() > 255){
-            return Response.badRequest(1, "Tekst postu jest zbyt długi");
-        }
-        LocalDateTime now = LocalDateTime.now();
+    public List<PostDto> getAllPosts(HttpServletRequest request) {
+        User user = userService.getLoggedInUser();
+        String userIp = request.getRemoteAddr();
 
-        Post post = new Post();
-        post.setText(newPostDto.text());
-
-        post.setVisibility(newPostDto.visibility());
-        post.setType(newPostDto.type());
-
-        if(post.getType() == Post.Type.IMAGE){
-            if(contentFile != null){
-                ResponseEntity<Response> uploadResponse = PostFileService.upload(now, contentFile);
-                if(uploadResponse.getStatusCode() != HttpStatusCode.valueOf(200)){
-                    return uploadResponse;
-                }
-
-                post.setContent(uploadResponse.getBody().getMessage());
-            }
-            else{
-                //TODO Download and save file
-            }
-        }
-
-        post.setUser(userService.getLoggedInUser());
-        post.setCreatorIp(request.getRemoteAddr());
-
-        post.setCreatedAt(now);
-
-        repository.save(post);
-        return Response.ok("Stworzono prawidłowo nowy post");
-    }
-
-    public Optional<Post> findById(Long postId) {
-        return repository.findById(postId);
+        return postRepository.findAll().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
     }
 }

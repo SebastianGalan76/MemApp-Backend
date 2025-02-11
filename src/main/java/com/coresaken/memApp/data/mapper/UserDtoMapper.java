@@ -3,11 +3,9 @@ package com.coresaken.memApp.data.mapper;
 import com.coresaken.memApp.data.UserDto;
 import com.coresaken.memApp.database.model.User;
 import jakarta.annotation.Nullable;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class UserDtoMapper {
     @Nullable
     public static UserDto toDTO(User user){
@@ -21,7 +19,7 @@ public class UserDtoMapper {
         userDto.setEmail(user.getEmail());
         userDto.setRole(user.getRole().toString());
 
-        userDto.setOwnedMemeLists(user.getOwnedMemeList());
+        userDto.setOwnedMemeLists(user.getOwnerPostList());
         return userDto;
     }
 }

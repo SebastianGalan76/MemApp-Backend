@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -17,14 +18,16 @@ public class PostRating {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
+    @ToString.Exclude
     private Post post;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
     @Column(length = 15)
     String userIp;
 
-    private int ratingValue;
+    private byte ratingValue;
 }

@@ -34,10 +34,10 @@ public class User implements UserDetails {
     Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts;
+    private List<Post> postList;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    List<UserMemeList> ownedMemeList;
+    List<UserPostList> ownerPostList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

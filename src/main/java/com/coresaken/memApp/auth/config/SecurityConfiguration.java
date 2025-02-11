@@ -25,7 +25,7 @@ public class SecurityConfiguration {
             request.requestMatchers(
                     "/auth/**",
                             "/user",
-                            "**")
+                            "/uploads/post/**")
                     .permitAll()
                     .anyRequest().authenticated();
         });

@@ -1,6 +1,6 @@
 package com.coresaken.memApp.data;
 
-import com.coresaken.memApp.database.model.UserMemeList;
+import com.coresaken.memApp.database.model.UserPostList;
 import lombok.Data;
 
 import java.util.List;
@@ -12,6 +12,6 @@ public class UserDto{
     String email;
     String role;
 
-    List<UserMemeList> ownedMemeLists;
+    List<UserPostList> ownedMemeLists;
 }
 

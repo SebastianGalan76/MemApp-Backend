@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostRatingService {
     final UserService userService;
-    final PostService postService;
+    final NewPostService newPostService;
 
     final PostRatingRepository repository;
 
@@ -26,7 +26,7 @@ public class PostRatingService {
             return Response.badRequest(2, "Nieprawidłowa wartość oceny.");
         }
 
-        Post post = postService.findById(postId).orElse(null);
+        Post post = newPostService.findById(postId).orElse(null);
         if(post == null){
             return Response.badRequest(1, "Brak postu o podanym identyfikatorze. Możliwe, że post został usunięty.");
         }
