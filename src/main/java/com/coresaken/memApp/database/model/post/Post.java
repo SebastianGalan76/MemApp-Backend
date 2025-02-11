@@ -25,6 +25,8 @@ public class Post {
     private String creatorIp;
 
     private String text;
+
+    @Column(length = 2048)
     private String content;
 
     @Enumerated(EnumType.STRING)
@@ -38,7 +40,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     public enum Type{
-        PHOTO, EMBEDDED_TIKTOK, EMBEDDED_INSTAGRAM, EMBEDDED_X;
+        IMAGE, EMBEDDED_TIKTOK, EMBEDDED_INSTAGRAM, EMBEDDED_X;
     }
     public enum Visibility{
         PUBLIC, NOT_PUBLIC, PRIVATE

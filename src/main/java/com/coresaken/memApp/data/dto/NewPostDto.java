@@ -1,6 +1,8 @@
 package com.coresaken.memApp.data.dto;
 
 import com.coresaken.memApp.database.model.post.Post;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public record NewPostDto(String text, String content, Post.Visibility visibility, Post.Type type, boolean contentSpoiler, boolean contentNSFW) {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record NewPostDto(String text, String content, Post.Type type, Post.Visibility visibility) {
 }
