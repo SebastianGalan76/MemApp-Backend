@@ -44,7 +44,7 @@ public class UserPostList {
             )
     @JsonIgnore
     @ToString.Exclude
-    List<Post> savedPosts = new ArrayList<>();
+    Set<Post> savedPosts = new HashSet<>();
 
 
     public enum Accessibility{
