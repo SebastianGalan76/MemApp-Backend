@@ -52,21 +52,21 @@ public class UserPostListService {
     public ResponseEntity<Response> save(Long postID, Long listID) {
         UserPostList postList = repository.findById(listID).orElse(null);
         if(postList == null){
-            return Response.badRequest(1, "");
+            return Response.badRequest(1, "Nie znaleziono listy o podanym ID. Lista została prawdopodobnie usunięta!");
         }
 
         User user = userService.getLoggedInUser();
         if(user == null){
-            return Response.badRequest(2, "");
+            return Response.badRequest(2, "Musisz się zalogować, aby dodać post do swojej listy!");
         }
 
         if(!postList.getOwner().equals(user)){
-            return Response.badRequest(3, "");
+            return Response.badRequest(3, "Nie możesz dodać postu do tej listy!");
         }
 
         Post post = postRepository.findById(postID).orElse(null);
         if(post == null){
-            return Response.badRequest(4, "");
+            return Response.badRequest(4, "Nie znaleziono postu o podanym ID. Post został prawdopodobnie usunięty!");
         }
 
         if(postList.getSavedPosts().contains(post)){

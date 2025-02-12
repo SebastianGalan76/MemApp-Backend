@@ -22,7 +22,7 @@ public class PostRatingService {
     final PostRatingRepository repository;
 
     public ResponseEntity<Response> rate(Long postId, byte ratingValue, HttpServletRequest request) {
-        if(ratingValue != -1 && ratingValue != 1){
+        if(ratingValue != -1 && ratingValue != 1 && ratingValue != 0){
             return Response.badRequest(2, "Nieprawidłowa wartość oceny.");
         }
 
@@ -35,13 +35,19 @@ public class PostRatingService {
         String userIp = request.getRemoteAddr();
 
         PostRating postRating = getUserRatingForPost(post, user, userIp);
-        postRating.setPost(post);
-        postRating.setUser(user);
-        postRating.setRatingValue(ratingValue);
-        postRating.setUserIp(userIp);
+        if(ratingValue == 0){
+            repository.delete(postRating);
+            return Response.ok("Usunięto prawidłowo ocenę");
+        }
+        else{
+            postRating.setPost(post);
+            postRating.setUser(user);
+            postRating.setRatingValue(ratingValue);
+            postRating.setUserIp(userIp);
 
-        repository.save(postRating);
-        return Response.ok("Oceniono prawidłowo post");
+            repository.save(postRating);
+            return Response.ok("Oceniono prawidłowo post");
+        }
     }
 
     public PostRating getUserRatingForPost(Post post, User user, String userIp){

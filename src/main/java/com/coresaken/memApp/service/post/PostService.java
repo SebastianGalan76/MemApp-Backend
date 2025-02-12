@@ -23,6 +23,6 @@ public class PostService {
         User user = userService.getLoggedInUser();
         String userIp = request.getRemoteAddr();
 
-        return postRepository.findAll().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+        return postRepository.findAllByOrderByCreatedAtDesc().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
     }
 }
