@@ -1,9 +1,9 @@
-package com.coresaken.memApp.controller;
+package com.coresaken.memApp.controller.list;
 
 import com.coresaken.memApp.data.response.ObjectResponse;
 import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.database.model.UserPostList;
-import com.coresaken.memApp.service.UserPostListService;
+import com.coresaken.memApp.service.list.UserPostListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +18,7 @@ public class UserPostListController {
 
     @PostMapping("/user-post-list/create")
     public ResponseEntity<ObjectResponse<UserPostList>> createList(@RequestParam("name") String name, @RequestParam("accessibility") String accessibility){
-        return service.createList(name, accessibility);
+        return service.create(name, accessibility);
     }
 
     @PostMapping("/user-post-list/save/{postID}/{listID}")

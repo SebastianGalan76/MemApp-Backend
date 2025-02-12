@@ -16,17 +16,17 @@ import java.time.LocalDateTime;
 public class ActiveAccountToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
-    User user;
+    private User user;
 
     @Column(length = 36)
-    String token;
+    private String token;
 
     @Column(columnDefinition = "TIMESTAMP")
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     public ActiveAccountToken(User user, String token){
         this.user = user;

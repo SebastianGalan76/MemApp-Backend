@@ -1,4 +1,4 @@
-package com.coresaken.memApp.service;
+package com.coresaken.memApp.service.list;
 
 import com.coresaken.memApp.data.response.ObjectResponse;
 import com.coresaken.memApp.data.response.Response;
@@ -7,6 +7,7 @@ import com.coresaken.memApp.database.model.UserPostList;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.UserPostListRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;
+import com.coresaken.memApp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,12 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserPostListService {
-    final UserPostListRepository repository;
-    final PostRepository postRepository;
-
     final UserService userService;
 
-    public ResponseEntity<ObjectResponse<UserPostList>> createList(String name, String accessibility) {
+    final UserPostListRepository userPostListRepository;
+    final PostRepository postRepository;
+
+    public ResponseEntity<ObjectResponse<UserPostList>> create(String name, String accessibility) {
         if(name == null || name.isBlank()){
             return ObjectResponse.badRequest(1, "Nazwa nie może być pusta!");
         }
@@ -45,12 +46,12 @@ public class UserPostListService {
         userPostList.setUuid(UUID.randomUUID());
         userPostList.setOwner(user);
 
-        userPostList = repository.save(userPostList);
+        userPostList = userPostListRepository.save(userPostList);
         return ObjectResponse.ok("Stworzono poprawnie nową listę.", userPostList);
     }
 
     public ResponseEntity<Response> save(Long postID, Long listID) {
-        UserPostList postList = repository.findById(listID).orElse(null);
+        UserPostList postList = userPostListRepository.findById(listID).orElse(null);
         if(postList == null){
             return Response.badRequest(1, "Nie znaleziono listy o podanym ID. Lista została prawdopodobnie usunięta!");
         }
@@ -76,7 +77,7 @@ public class UserPostListService {
             postList.getSavedPosts().add(post);
         }
 
-        repository.save(postList);
+        userPostListRepository.save(postList);
         return Response.ok("Dodano post do listy");
     }
 }

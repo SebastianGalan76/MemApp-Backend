@@ -19,46 +19,46 @@ public class PostRatingService {
     final UserService userService;
     final NewPostService newPostService;
 
-    final PostRatingRepository repository;
+    final PostRatingRepository postRatingRepository;
 
-    public ResponseEntity<Response> rate(Long postId, byte ratingValue, HttpServletRequest request) {
+    public ResponseEntity<Response> rate(Long postID, byte ratingValue, HttpServletRequest request) {
         if(ratingValue != -1 && ratingValue != 1 && ratingValue != 0){
             return Response.badRequest(1, "Nieprawidłowa wartość oceny.");
         }
 
-        Post post = newPostService.findById(postId).orElse(null);
+        Post post = newPostService.findById(postID).orElse(null);
         if(post == null){
             return Response.badRequest(2, "Brak postu o podanym identyfikatorze. Możliwe, że post został usunięty.");
         }
 
         User user = userService.getLoggedInUser();
-        String userIp = request.getRemoteAddr();
+        String userIP = request.getRemoteAddr();
 
-        PostRating postRating = getUserRatingForPost(post, user, userIp);
+        PostRating postRating = getUserRatingForPost(post, user, userIP);
         if(ratingValue == 0){
-            repository.delete(postRating);
+            postRatingRepository.delete(postRating);
             return Response.ok("Usunięto prawidłowo ocenę");
         }
         else{
             postRating.setPost(post);
             postRating.setUser(user);
             postRating.setRatingValue(ratingValue);
-            postRating.setUserIp(userIp);
+            postRating.setUserIp(userIP);
 
-            repository.save(postRating);
+            postRatingRepository.save(postRating);
             return Response.ok("Oceniono prawidłowo post");
         }
     }
 
     public PostRating getUserRatingForPost(Post post, User user, String userIp){
         if(user != null){
-            List<PostRating> ratings = repository.findByPostAndUser(post, user);
+            List<PostRating> ratings = postRatingRepository.findByPostAndUser(post, user);
 
             if(ratings != null && !ratings.isEmpty()){
                 return ratings.getFirst();
             }
         }
-        List<PostRating> ratings = repository.findByPostAndUserIp(post, userIp);
+        List<PostRating> ratings = postRatingRepository.findByPostAndUserIp(post, userIp);
         if(ratings != null && !ratings.isEmpty()){
             PostRating postRating = ratings.getFirst();
             if(postRating.getUser() == null){

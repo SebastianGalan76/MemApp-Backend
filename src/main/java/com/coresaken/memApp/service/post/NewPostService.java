@@ -21,7 +21,7 @@ public class NewPostService {
     final UserService userService;
     final PostFileService postFileService;
 
-    final PostRepository repository;
+    final PostRepository postRepository;
 
     public ResponseEntity<Response> createPost(NewPostDto newPostDto, MultipartFile contentFile, HttpServletRequest request) {
         if(newPostDto.text() != null && newPostDto.text().length() > 255){
@@ -60,11 +60,11 @@ public class NewPostService {
 
         post.setCreatedAt(now);
 
-        repository.save(post);
+        postRepository.save(post);
         return Response.ok("Stworzono prawidłowo nowy post");
     }
 
     public Optional<Post> findById(Long postId) {
-        return repository.findById(postId);
+        return postRepository.findById(postId);
     }
 }

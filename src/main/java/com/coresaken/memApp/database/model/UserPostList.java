@@ -17,24 +17,24 @@ import java.util.*;
 public class UserPostList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(length = 30)
-    String name;
+    private String name;
 
     @Column(length = 6)
-    String color;
+    private String color;
 
     @Enumerated(EnumType.STRING)
     Accessibility accessibility;
 
-    UUID uuid;
+    private UUID uuid;
 
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     @ToString.Exclude
-    User owner;
+    private User owner;
 
     @ManyToMany(cascade = {CascadeType.ALL})
             @JoinTable(
@@ -44,7 +44,7 @@ public class UserPostList {
             )
     @JsonIgnore
     @ToString.Exclude
-    Set<Post> savedPosts = new HashSet<>();
+    private Set<Post> savedPosts = new HashSet<>();
 
 
     public enum Accessibility{

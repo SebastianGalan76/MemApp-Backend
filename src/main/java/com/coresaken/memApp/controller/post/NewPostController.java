@@ -14,7 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 public class NewPostController {
-    final NewPostService service;
+    final NewPostService newPostservice;
+
     final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping("/post/create")
@@ -22,6 +23,6 @@ public class NewPostController {
             @RequestParam("newPostDto") String newPostDtoJson,
             @RequestParam(value = "contentFile", required = false) MultipartFile contentFile,
             HttpServletRequest request) throws JsonProcessingException {
-        return service.createPost(objectMapper.readValue(newPostDtoJson, NewPostDto.class), contentFile, request);
+        return newPostservice.createPost(objectMapper.readValue(newPostDtoJson, NewPostDto.class), contentFile, request);
     }
 }

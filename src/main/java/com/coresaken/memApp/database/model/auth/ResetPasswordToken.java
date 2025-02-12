@@ -15,20 +15,20 @@ import java.time.LocalDateTime;
 @Table(name = "reset_password_token")
 public class ResetPasswordToken {
     @Transient
-    int TOKEN_EXPIRATION_TIME = 10;
+    private int TOKEN_EXPIRATION_TIME = 10;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
-    User user;
+    private User user;
 
-    String token;
+    private String token;
 
     @Column(columnDefinition = "TIMESTAMP")
-    LocalDateTime expiredAt;
+    private LocalDateTime expiredAt;
 
     public ResetPasswordToken(User user, String token){
         this.user = user;

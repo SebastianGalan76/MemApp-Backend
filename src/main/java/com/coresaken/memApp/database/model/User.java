@@ -20,24 +20,24 @@ import java.util.Objects;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(length = 30, unique = true)
-    String login;
+    private String login;
 
     @Column(length = 60, unique = true)
-    String email;
+    private String email;
 
-    String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> postList;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    List<UserPostList> ownerPostList;
+    private List<UserPostList> ownerPostList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

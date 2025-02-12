@@ -27,7 +27,7 @@ public class PostRating {
     private User user;
 
     @Column(length = 15)
-    String userIp;
+    private String userIp;
 
     private byte ratingValue;
 }
