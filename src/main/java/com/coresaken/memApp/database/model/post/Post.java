@@ -49,7 +49,7 @@ public class Post {
     private List<UserPostList> userPostList = new ArrayList<>();
 
     public enum Type{
-        IMAGE, EMBEDDED_TIKTOK, EMBEDDED_INSTAGRAM, EMBEDDED_X;
+        IMAGE, TIKTOK, INSTAGRAM, X;
     }
     public enum Visibility{
         PUBLIC, NOT_PUBLIC, PRIVATE

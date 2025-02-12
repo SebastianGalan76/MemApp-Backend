@@ -23,12 +23,12 @@ public class PostRatingService {
 
     public ResponseEntity<Response> rate(Long postId, byte ratingValue, HttpServletRequest request) {
         if(ratingValue != -1 && ratingValue != 1 && ratingValue != 0){
-            return Response.badRequest(2, "Nieprawidłowa wartość oceny.");
+            return Response.badRequest(1, "Nieprawidłowa wartość oceny.");
         }
 
         Post post = newPostService.findById(postId).orElse(null);
         if(post == null){
-            return Response.badRequest(1, "Brak postu o podanym identyfikatorze. Możliwe, że post został usunięty.");
+            return Response.badRequest(2, "Brak postu o podanym identyfikatorze. Możliwe, że post został usunięty.");
         }
 
         User user = userService.getLoggedInUser();

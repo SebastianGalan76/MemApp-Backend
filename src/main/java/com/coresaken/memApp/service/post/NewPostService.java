@@ -49,6 +49,11 @@ public class NewPostService {
                 post.setContent(newPostDto.content());
             }
         }
+        else{
+            if (post.getType() == Post.Type.TIKTOK){
+                post.setContent(newPostDto.content());
+            }
+        }
 
         post.setUser(userService.getLoggedInUser());
         post.setCreatorIp(request.getRemoteAddr());
