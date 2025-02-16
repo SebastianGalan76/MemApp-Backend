@@ -19,6 +19,9 @@ public class UserPostList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private UUID uuid;
+
     @Column(length = 30)
     private String name;
 
@@ -27,8 +30,6 @@ public class UserPostList {
 
     @Enumerated(EnumType.STRING)
     Accessibility accessibility;
-
-    private UUID uuid;
 
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)

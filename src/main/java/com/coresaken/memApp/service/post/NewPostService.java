@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,7 @@ public class NewPostService {
         LocalDateTime now = LocalDateTime.now();
 
         Post post = new Post();
+        post.setUuid(UUID.randomUUID());
         post.setText(newPostDto.text());
 
         post.setVisibility(newPostDto.visibility());
