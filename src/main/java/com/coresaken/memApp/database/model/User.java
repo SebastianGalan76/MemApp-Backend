@@ -1,5 +1,6 @@
 package com.coresaken.memApp.database.model;
 
+import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.post.Post;
 import jakarta.persistence.*;
 import lombok.*;

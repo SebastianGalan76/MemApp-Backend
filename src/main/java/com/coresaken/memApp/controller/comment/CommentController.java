@@ -1,10 +1,9 @@
-package com.coresaken.memApp.controller;
+package com.coresaken.memApp.controller.comment;
 
 import com.coresaken.memApp.data.dto.CommentDto;
 import com.coresaken.memApp.data.dto.NewCommentDto;
 import com.coresaken.memApp.data.response.ObjectResponse;
-import com.coresaken.memApp.data.response.Response;
-import com.coresaken.memApp.service.CommentService;
+import com.coresaken.memApp.service.comment.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

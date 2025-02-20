@@ -1,6 +1,6 @@
 package com.coresaken.memApp.database.model.post;
 
-import com.coresaken.memApp.database.model.Comment;
+import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.UserPostList;
 import jakarta.persistence.*;
@@ -42,10 +42,9 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
-    private boolean contentSpoiler;
-    private boolean contentNSFW;
-
     private LocalDateTime createdAt;
+
+    private int commentAmount;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostRating> postRatingList;

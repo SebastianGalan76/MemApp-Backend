@@ -1,6 +1,6 @@
-package com.coresaken.memApp.database.repository;
+package com.coresaken.memApp.database.repository.comment;
 
-import com.coresaken.memApp.database.model.Comment;
+import com.coresaken.memApp.database.model.comment.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

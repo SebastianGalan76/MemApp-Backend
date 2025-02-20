@@ -27,6 +27,7 @@ public class PostDtoMapper {
         postDto.setType(post.getType());
         postDto.setVisibility(post.getVisibility());
         postDto.setCreatedAt(post.getCreatedAt());
+        postDto.setCommentAmount(post.getCommentAmount());
 
         postDto.setRating(post.getPostRatingList().stream().mapToInt(PostRating::getRatingValue).sum());
 

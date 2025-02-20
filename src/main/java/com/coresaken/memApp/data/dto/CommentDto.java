@@ -2,6 +2,7 @@ package com.coresaken.memApp.data.dto;
 
 import com.coresaken.memApp.database.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,8 @@ public class CommentDto {
     AuthorDto author;
     boolean isEdited;
 
+    ReplyDto reply;
     LocalDateTime createdAt;
-    List<CommentDto> replies;
 
     int likeAmount;
     int dislikeAmount;
@@ -28,13 +29,22 @@ public class CommentDto {
     }
 
     @Data
+    @AllArgsConstructor
     public static class AuthorDto {
         Long id;
         String login;
+    }
 
-        public AuthorDto(Long id, String login){
-            this.id = id;
-            this.login = login;
+    @Data
+    public static class ReplyDto{
+        int totalReplies;
+        int currentPage;
+        List<CommentDto> replies;
+
+        public ReplyDto(int totalReplies, List<CommentDto> replies) {
+            this.totalReplies = totalReplies;
+            this.replies = replies;
+            this.currentPage = 0;
         }
     }
 }

@@ -1,15 +1,15 @@
-package com.coresaken.memApp.service;
+package com.coresaken.memApp.service.comment;
 
 import com.coresaken.memApp.data.dto.CommentDto;
 import com.coresaken.memApp.data.dto.NewCommentDto;
 import com.coresaken.memApp.data.mapper.CommentDtoMapper;
 import com.coresaken.memApp.data.response.ObjectResponse;
-import com.coresaken.memApp.data.response.Response;
-import com.coresaken.memApp.database.model.Comment;
+import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
-import com.coresaken.memApp.database.repository.CommentRepository;
+import com.coresaken.memApp.database.repository.comment.CommentRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;
+import com.coresaken.memApp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class CommentService {
         Page<Comment> comments = commentRepository.findByPostId(id, pageable);
 
         User user = userService.getLoggedInUser();
-        List<CommentDto> result = comments.getContent().stream().map(comment -> CommentDtoMapper.toDTO(comment, user, request.getRemoteAddr())).toList();
+        List<CommentDto> result = comments.getContent().stream().map(comment -> CommentDtoMapper.toDTO(comment, user, request.getRemoteAddr(), 0)).toList();
 
         return new PageImpl<CommentDto>(result, pageable, 15);
     }
@@ -48,7 +48,7 @@ public class CommentService {
         Page<Comment> comments = commentRepository.findByParentCommentId(id, pageable);
 
         User user = userService.getLoggedInUser();
-        List<CommentDto> result = comments.getContent().stream().map(comment -> CommentDtoMapper.toDTO(comment, user, request.getRemoteAddr())).toList();
+        List<CommentDto> result = comments.getContent().stream().map(comment -> CommentDtoMapper.toDTO(comment, user, request.getRemoteAddr(), 0)).toList();
 
         return new PageImpl<CommentDto>(result, pageable, 15);
     }
@@ -75,7 +75,9 @@ public class CommentService {
                 return ObjectResponse.badRequest(3, "Wystąpił nieoczekiwany błąd. Post został prawdopodobnie usunięty!");
             }
 
-            comment.setPost(postOptional.get());
+            Post post = postOptional.get();
+            post.setCommentAmount(post.getCommentAmount() + 1);
+            comment.setPost(post);
         }
         else{
             Optional<Comment> parentCommentOptional = commentRepository.findById(newCommentDto.getId());
@@ -87,6 +89,6 @@ public class CommentService {
         }
 
         comment = commentRepository.save(comment);
-        return ObjectResponse.ok("Komentarz został prawidłowo dodany", CommentDtoMapper.toDTO(comment, user, null));
+        return ObjectResponse.ok("Komentarz został prawidłowo dodany", CommentDtoMapper.toDTO(comment, user, null, 0));
     }
 }

@@ -24,6 +24,7 @@ public class PostDto {
     LocalDateTime createdAt;
 
     int rating;
+    int commentAmount;
 
     UserDto user;
 
