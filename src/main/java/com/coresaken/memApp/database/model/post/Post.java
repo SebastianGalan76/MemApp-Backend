@@ -1,5 +1,6 @@
 package com.coresaken.memApp.database.model.post;
 
+import com.coresaken.memApp.database.model.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.UserPostList;
 import jakarta.persistence.*;
@@ -51,6 +52,9 @@ public class Post {
 
     @ManyToMany(mappedBy = "savedPosts")
     private List<UserPostList> userPostList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     public enum Type{
         IMAGE, TIKTOK, INSTAGRAM, X;

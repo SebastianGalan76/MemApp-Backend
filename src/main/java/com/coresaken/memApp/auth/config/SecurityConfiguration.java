@@ -26,7 +26,8 @@ public class SecurityConfiguration {
                     "/auth/**",
                             "/user",
                             "/post/**",
-                            "/uploads/post/**")
+                            "/uploads/post/**",
+                            "/comment/**")
                     .permitAll()
                     .anyRequest().authenticated();
         });
