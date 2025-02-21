@@ -2,6 +2,7 @@ package com.coresaken.memApp.database.model.comment;
 
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
+import com.coresaken.memApp.database.model.post.PostRating;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,4 +43,6 @@ public class Comment {
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> replies;
 
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentRating> commentRatingList;
 }

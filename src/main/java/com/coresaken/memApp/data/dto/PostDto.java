@@ -29,7 +29,9 @@ public class PostDto {
     UserDto user;
 
     public void setOwner(User user) {
-        this.owner = new OwnerDto(user.getId(), user.getLogin());
+        if(user != null){
+            this.owner = new OwnerDto(user.getId(), user.getLogin());
+        }
     }
 
     @Data

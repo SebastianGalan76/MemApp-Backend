@@ -91,4 +91,8 @@ public class CommentService {
         comment = commentRepository.save(comment);
         return ObjectResponse.ok("Komentarz został prawidłowo dodany", CommentDtoMapper.toDTO(comment, user, null, 0));
     }
+
+    public Optional<Comment> findById(Long id){
+        return commentRepository.findById(id);
+    }
 }
