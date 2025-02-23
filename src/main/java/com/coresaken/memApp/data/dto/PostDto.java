@@ -13,7 +13,7 @@ public class PostDto {
     Long id;
     UUID uuid;
 
-    OwnerDto owner;
+    AuthorDto author;
 
     String text;
     String content;
@@ -28,9 +28,9 @@ public class PostDto {
 
     UserDto user;
 
-    public void setOwner(User user) {
+    public void setAuthor(User user) {
         if(user != null){
-            this.owner = new OwnerDto(user.getId(), user.getLogin());
+            this.author = new AuthorDto(user.getId(), user.getLogin(), user.getAvatar());
         }
     }
 
@@ -38,17 +38,5 @@ public class PostDto {
     public static class UserDto {
         byte rating;
         List<Long> postListIds;
-    }
-
-
-    @Data
-    public static class OwnerDto {
-        Long id;
-        String login;
-
-        public OwnerDto(Long id, String login){
-            this.id = id;
-            this.login = login;
-        }
     }
 }

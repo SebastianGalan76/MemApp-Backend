@@ -1,4 +1,4 @@
-package com.coresaken.memApp.service;
+package com.coresaken.memApp.service.user;
 
 import com.coresaken.memApp.database.model.User;
 import jakarta.annotation.Nullable;

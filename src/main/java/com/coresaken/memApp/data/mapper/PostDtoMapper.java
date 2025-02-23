@@ -21,7 +21,7 @@ public class PostDtoMapper {
 
         postDto.setId(post.getId());
         postDto.setUuid(post.getUuid());
-        postDto.setOwner(post.getUser());
+        postDto.setAuthor(post.getUser());
         postDto.setText(post.getText());
         postDto.setContent(post.getContent());
         postDto.setType(post.getType());

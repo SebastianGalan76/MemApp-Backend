@@ -18,6 +18,7 @@ public class UserDtoMapper {
         userDto.setLogin(user.getLogin());
         userDto.setEmail(user.getEmail());
         userDto.setRole(user.getRole().toString());
+        userDto.setAvatar(user.getAvatar());
 
         userDto.setOwnedMemeLists(user.getOwnerPostList());
         return userDto;

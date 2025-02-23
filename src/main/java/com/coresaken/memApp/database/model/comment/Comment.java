@@ -21,7 +21,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 1024)
+    @Column(length = 1024, columnDefinition = "TEXT")
     private String content;
 
     private LocalDateTime createdAt;

@@ -7,7 +7,7 @@ import com.coresaken.memApp.database.model.UserPostList;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.UserPostListRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;
-import com.coresaken.memApp.service.UserService;
+import com.coresaken.memApp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

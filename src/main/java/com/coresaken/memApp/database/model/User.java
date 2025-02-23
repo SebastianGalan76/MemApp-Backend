@@ -31,6 +31,9 @@ public class User implements UserDetails {
 
     private String password;
 
+    @Column(length = 42)
+    private String avatar; //File name or hex color
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

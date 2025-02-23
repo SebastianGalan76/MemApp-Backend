@@ -5,7 +5,7 @@ import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.comment.CommentRating;
 import com.coresaken.memApp.database.repository.comment.CommentRatingRepository;
-import com.coresaken.memApp.service.UserService;
+import com.coresaken.memApp.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

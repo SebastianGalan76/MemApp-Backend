@@ -4,7 +4,7 @@ import com.coresaken.memApp.data.dto.NewPostDto;
 import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.post.PostRepository;
-import com.coresaken.memApp.service.UserService;
+import com.coresaken.memApp.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;

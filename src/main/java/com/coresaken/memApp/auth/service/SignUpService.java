@@ -6,6 +6,7 @@ import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.repository.UserRepository;
 import com.coresaken.memApp.service.async.AsyncAccountService;
+import com.coresaken.memApp.service.user.UserAvatarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class SignUpService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserAvatarService userAvatarService;
 
     @Transactional
     public ResponseEntity<Response> signUp(SignUpRequestDto request) {
@@ -51,6 +53,7 @@ public class SignUpService {
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .role(User.Role.USER)
+                .avatar(userAvatarService.getRandomColor())
                 .build();
 
         try {

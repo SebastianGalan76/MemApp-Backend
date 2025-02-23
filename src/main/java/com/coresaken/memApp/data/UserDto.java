@@ -12,6 +12,8 @@ public class UserDto{
     String email;
     String role;
 
+    String avatar;
+
     List<UserPostList> ownedMemeLists;
 }
 
