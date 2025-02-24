@@ -4,6 +4,7 @@ import com.coresaken.memApp.data.dto.CommentDto;
 import com.coresaken.memApp.data.dto.NewCommentDto;
 import com.coresaken.memApp.data.mapper.CommentDtoMapper;
 import com.coresaken.memApp.data.response.ObjectResponse;
+import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
@@ -94,5 +95,33 @@ public class CommentService {
 
     public Optional<Comment> findById(Long id){
         return commentRepository.findById(id);
+    }
+
+    public ResponseEntity<Response> delete(Long id) {
+        Optional<Comment> commentOptional = commentRepository.findById(id);
+
+        if(commentOptional.isEmpty()){
+            return Response.badRequest(1, "Wystąpił nieoczekiwany błąd. Komentarz został już prawdopodobnie usunięty!");
+        }
+
+        User user = userService.getLoggedInUser();
+
+        if(user == null){
+            return Response.badRequest(2, "Twoja sesja wygasła. Zaloguj się ponownie!");
+        }
+
+        Comment comment = commentOptional.get();
+        if(!comment.getAuthor().equals(user)){
+            return Response.badRequest(3, "Nie masz uprawnień, aby usunąć ten komentarz!");
+        }
+
+        Post post = comment.getPost();
+        if(post != null){
+            post.setCommentAmount(post.getCommentAmount() - 1);
+            postRepository.save(post);
+        }
+
+        commentRepository.delete(comment);
+        return Response.ok("Usunięto prawidłowo komentarz");
     }
 }

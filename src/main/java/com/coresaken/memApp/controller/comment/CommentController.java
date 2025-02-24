@@ -3,6 +3,7 @@ package com.coresaken.memApp.controller.comment;
 import com.coresaken.memApp.data.dto.CommentDto;
 import com.coresaken.memApp.data.dto.NewCommentDto;
 import com.coresaken.memApp.data.response.ObjectResponse;
+import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.service.comment.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,10 @@ public class CommentController {
     @GetMapping("/comment/parent/{id}/{page}")
     public Page<CommentDto> getCommentsForComment(@PathVariable("id") Long id, @PathVariable("page") int page, HttpServletRequest request){
         return commentService.getCommentsForComment(id, page, request);
+    }
+
+    @DeleteMapping("/comment/{id}")
+    public ResponseEntity<Response> delete(@PathVariable("id") Long id){
+        return commentService.delete(id);
     }
 }
