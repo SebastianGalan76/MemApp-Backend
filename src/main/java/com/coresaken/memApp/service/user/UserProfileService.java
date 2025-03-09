@@ -5,7 +5,7 @@ import com.coresaken.memApp.data.dto.UserProfileDto;
 import com.coresaken.memApp.data.mapper.PostDtoMapper;
 import com.coresaken.memApp.data.response.ObjectResponse;
 import com.coresaken.memApp.database.model.User;
-import com.coresaken.memApp.database.model.UserPostList;
+import com.coresaken.memApp.database.model.list.UserPostList;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.UserRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;

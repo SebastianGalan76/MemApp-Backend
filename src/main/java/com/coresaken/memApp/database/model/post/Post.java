@@ -2,7 +2,8 @@ package com.coresaken.memApp.database.model.post;
 
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
-import com.coresaken.memApp.database.model.UserPostList;
+import com.coresaken.memApp.database.model.list.UserPostList;
+import com.coresaken.memApp.database.model.list.UserPostListPost;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,8 +54,8 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostRating> postRatingList;
 
-    @ManyToMany(mappedBy = "savedPosts")
-    private List<UserPostList> userPostList = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPostListPost> userPostListPosts = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;

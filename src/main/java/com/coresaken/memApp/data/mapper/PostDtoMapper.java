@@ -45,9 +45,9 @@ public class PostDtoMapper {
         if(user != null){
             List<Long> postListIds = new ArrayList<>();
 
-            post.getUserPostList().forEach(postList -> {
-                if(postList.getSavedPosts().contains(post)){
-                    postListIds.add(postList.getId());
+            post.getUserPostListPosts().forEach(postListPost -> {
+                if(postListPost.getPost().equals(post)){
+                    postListIds.add(postListPost.getUserPostList().getId());
                 }
             });
 

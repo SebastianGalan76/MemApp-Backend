@@ -18,10 +18,7 @@ public class UserProfileDto {
 
     List<PostListDto> userList;
 
-    @AllArgsConstructor
-    public static class PostListDto{
-        Long id;
-        String name;
-        int postAmount;
+    public record PostListDto(Long id, String name, int postAmount){
+
     }
 }

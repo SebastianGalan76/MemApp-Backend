@@ -1,6 +1,6 @@
 package com.coresaken.memApp.data;
 
-import com.coresaken.memApp.database.model.UserPostList;
+import com.coresaken.memApp.database.model.list.UserPostList;
 import lombok.Data;
 
 import java.util.List;

@@ -21,6 +21,7 @@ import java.util.UUID;
 public class NewPostService {
     final UserService userService;
     final PostFileService postFileService;
+    final PostScoreService postScoreService;
 
     final PostRepository postRepository;
 
@@ -61,6 +62,7 @@ public class NewPostService {
         post.setCreatorIp(request.getRemoteAddr());
 
         post.setCreatedAt(now);
+        post.setScore(postScoreService.calculateScore(post));
 
         postRepository.save(post);
         return Response.ok("Stworzono prawidłowo nowy post");

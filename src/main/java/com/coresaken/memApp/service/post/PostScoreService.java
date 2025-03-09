@@ -37,7 +37,7 @@ public class PostScoreService {
         }
     }
 
-    public static double calculateHotScore(long likes, long dislikes, long comments, LocalDateTime createdAt) {
+    public double calculateHotScore(long likes, long dislikes, long comments, LocalDateTime createdAt) {
         long postTime = createdAt.toEpochSecond(ZoneOffset.UTC);
         long ageInSeconds = postTime - EPOCH;
 

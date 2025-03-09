@@ -1,5 +1,6 @@
-package com.coresaken.memApp.database.model;
+package com.coresaken.memApp.database.model.list;
 
+import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -37,15 +38,10 @@ public class UserPostList {
     @ToString.Exclude
     private User owner;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-            @JoinTable(
-                    name = "UserPostList_Post",
-                    joinColumns = {@JoinColumn(name = "user_post_list_id")},
-                    inverseJoinColumns = {@JoinColumn(name = "post_id")}
-            )
+    @OneToMany(mappedBy = "userPostList", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
-    private Set<Post> savedPosts = new HashSet<>();
+    private List<UserPostListPost> savedPosts = new ArrayList<>();
 
 
     public enum Accessibility{
