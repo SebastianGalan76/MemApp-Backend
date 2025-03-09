@@ -8,6 +8,10 @@ import com.coresaken.memApp.database.repository.post.PostRepository;
 import com.coresaken.memApp.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +25,20 @@ public class PostService {
 
     final PostRepository postRepository;
 
-    public List<PostDto> getAllPosts(HttpServletRequest request) {
+    public Page<PostDto> getHomePosts(int page, HttpServletRequest request) {
+        if(page<0){
+            return null;
+        }
+
         User user = userService.getLoggedInUser();
         String userIp = request.getRemoteAddr();
 
-        return postRepository.findAllByOrderByCreatedAtDesc().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+        Pageable pageable = PageRequest.of(page, 15);
+        Page<Post> posts = postRepository.findAllByOrderByScoreDesc(pageable);
+
+        List<PostDto> result = posts.getContent().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+
+        return new PageImpl<>(result, pageable, posts.getTotalElements());
     }
 
     public ResponseEntity<PostDto> getPostDto(Long id, HttpServletRequest request) {

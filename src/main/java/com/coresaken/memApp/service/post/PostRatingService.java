@@ -5,6 +5,7 @@ import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.model.post.PostRating;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.repository.post.PostRatingRepository;
+import com.coresaken.memApp.database.repository.post.PostRepository;
 import com.coresaken.memApp.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostRatingService {
     final UserService userService;
-    final NewPostService newPostService;
 
+    final PostRepository postRepository;
     final PostRatingRepository postRatingRepository;
 
     public ResponseEntity<Response> rate(Long postID, byte ratingValue, HttpServletRequest request) {
@@ -26,7 +27,7 @@ public class PostRatingService {
             return Response.badRequest(1, "Nieprawidłowa wartość oceny.");
         }
 
-        Post post = newPostService.findById(postID).orElse(null);
+        Post post = postRepository.findById(postID).orElse(null);
         if(post == null){
             return Response.badRequest(2, "Brak postu o podanym identyfikatorze. Możliwe, że post został usunięty.");
         }
@@ -35,6 +36,13 @@ public class PostRatingService {
         String userIP = request.getRemoteAddr();
 
         PostRating postRating = getUserRatingForPost(post, user, userIP);
+        if(postRating.getRatingValue() == 1){
+            post.setLikeAmount(post.getLikeAmount() - 1);
+        }
+        else if(postRating.getRatingValue() == -1){
+            post.setDislikeAmount(post.getDislikeAmount() - 1);
+        }
+
         if(ratingValue == 0){
             postRatingRepository.delete(postRating);
             return Response.ok("Usunięto prawidłowo ocenę");
@@ -45,6 +53,14 @@ public class PostRatingService {
             postRating.setRatingValue(ratingValue);
             postRating.setUserIp(userIP);
 
+            if(postRating.getRatingValue() == 1){
+                post.setLikeAmount(post.getLikeAmount() + 1);
+            }
+            else if(postRating.getRatingValue() == -1){
+                post.setDislikeAmount(post.getDislikeAmount() + 1);
+            }
+
+            postRepository.save(post);
             postRatingRepository.save(postRating);
             return Response.ok("Oceniono prawidłowo post");
         }

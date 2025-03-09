@@ -26,6 +26,7 @@ public class SecurityConfiguration {
                     "/auth/**",
                             "/user",
                             "/post/**",
+                            "/profile/**",
                             "/uploads/post/**",
                             "/uploads/user/avatar/**",
                             "/comment/**")

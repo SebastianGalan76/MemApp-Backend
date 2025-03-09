@@ -45,6 +45,10 @@ public class Post {
     private LocalDateTime createdAt;
 
     private int commentAmount;
+    private int likeAmount;
+    private int dislikeAmount;
+
+    private int score;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostRating> postRatingList;

@@ -40,7 +40,7 @@ public class CommentService {
         User user = userService.getLoggedInUser();
         List<CommentDto> result = comments.getContent().stream().map(comment -> CommentDtoMapper.toDTO(comment, user, request.getRemoteAddr(), 0)).toList();
 
-        return new PageImpl<CommentDto>(result, pageable, 15);
+        return new PageImpl<CommentDto>(result, pageable, comments.getTotalElements());
     }
 
     public Page<CommentDto> getCommentsForComment(Long id, int page, HttpServletRequest request) {
@@ -51,7 +51,7 @@ public class CommentService {
         User user = userService.getLoggedInUser();
         List<CommentDto> result = comments.getContent().stream().map(comment -> CommentDtoMapper.toDTO(comment, user, request.getRemoteAddr(), 0)).toList();
 
-        return new PageImpl<CommentDto>(result, pageable, 15);
+        return new PageImpl<CommentDto>(result, pageable, comments.getTotalElements());
     }
 
     public ResponseEntity<ObjectResponse<CommentDto>> comment(NewCommentDto newCommentDto) {
