@@ -83,7 +83,17 @@ public class User implements UserDetails {
     }
 
     public enum Role {
-        USER, HELPER, MODERATOR, ADMIN
+        USER(100), HELPER(1000), MODERATOR(5000), ADMIN(100000);
+
+        final int value;
+
+        Role(int value){
+            this.value = value;
+        }
+
+        public int getValue(){
+            return value;
+        }
     }
 
     @Override
