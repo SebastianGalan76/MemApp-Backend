@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class UserProfileDto {
 
     List<PostListDto> userList;
 
-    public record PostListDto(Long id, String name, int postAmount){
+    public record PostListDto(Long id, UUID uuid, String name, int postAmount){
 
     }
 }

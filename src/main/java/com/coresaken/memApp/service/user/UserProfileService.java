@@ -47,7 +47,7 @@ public class UserProfileService {
                 .getOwnerPostList()
                 .stream()
                 .filter(list -> list.getAccessibility() == UserPostList.Accessibility.PUBLIC)
-                .map(list -> new UserProfileDto.PostListDto(list.getId(), list.getName(), list.getSavedPosts().size()))
+                .map(list -> new UserProfileDto.PostListDto(list.getId(), list.getUuid(), list.getName(), list.getSavedPosts().size()))
                 .toList()
         );
 
