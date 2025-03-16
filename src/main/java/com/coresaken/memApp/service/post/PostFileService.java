@@ -86,8 +86,9 @@ public class PostFileService {
     }
 
     public void remove(String fileName) {
+        String finalPath = UPLOAD_DIR + fileName;
         try {
-            Path filePath = Paths.get(UPLOAD_DIR).resolve(fileName.split("/")[3]).normalize();
+            Path filePath = Paths.get(finalPath).normalize();
             File file = filePath.toFile();
 
             if (file.exists()) {

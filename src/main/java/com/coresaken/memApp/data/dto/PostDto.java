@@ -2,6 +2,7 @@ package com.coresaken.memApp.data.dto;
 
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
+import com.coresaken.memApp.database.model.post.PostFlag;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ public class PostDto {
     int commentAmount;
 
     UserDto user;
+
+    List<PostFlag> flags;
 
     public void setAuthor(User user) {
         if(user != null){

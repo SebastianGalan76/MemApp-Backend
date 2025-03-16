@@ -4,6 +4,7 @@ import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.list.UserPostList;
 import com.coresaken.memApp.database.model.list.UserPostListPost;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @Nullable
     private User user;
 
     @Column(length = 15)
@@ -59,6 +61,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostFlag> flags;
 
     public enum Type{
         IMAGE, TIKTOK, INSTAGRAM, X;

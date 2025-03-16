@@ -22,6 +22,7 @@ public class NewPostService {
     final UserService userService;
     final PostFileService postFileService;
     final PostScoreService postScoreService;
+    final PostFlagService postFlagService;
 
     final PostRepository postRepository;
 
@@ -65,6 +66,8 @@ public class NewPostService {
         post.setScore(postScoreService.calculateScore(post));
 
         postRepository.save(post);
+        postFlagService.setPostFlag(post, newPostDto.flags());
+
         return Response.ok("Stworzono prawidłowo nowy post");
     }
 

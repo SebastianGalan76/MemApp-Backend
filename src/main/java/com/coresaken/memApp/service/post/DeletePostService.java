@@ -16,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DeletePostService {
     final UserService userService;
+    final PostFileService postFileService;
 
     final PostRepository postRepository;
 
@@ -28,17 +29,19 @@ public class DeletePostService {
 
         Optional<Post> postOptional = postRepository.findById(id);
         if(postOptional.isEmpty()){
-            return Response.badRequest(2, "Brak postu o podanym ID. Post został prawdopodobnie już usunięty.");
+            return Response.badRequest(2, "Brak posta o podanym ID. Post został prawdopodobnie już usunięty.");
         }
 
         Post post = postOptional.get();
-        if(PermissionChecker.hasPermission(user.getRole(), User.Role.HELPER)){
-            if(!post.getUser().equals(user)){
+        if(!PermissionChecker.hasPermission(user.getRole(), User.Role.HELPER)){
+            if(post.getUser() != null && !post.getUser().equals(user)){
                 return Response.badRequest(3, "Nie masz wymaganych uprawnień, aby usunąć ten post.");
             }
         }
 
         postRepository.delete(post);
+        postFileService.remove(post.getContent());
+
         return Response.ok("Usunięto prawidłowo post.");
     }
 }
