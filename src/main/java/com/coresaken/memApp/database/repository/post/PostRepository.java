@@ -11,7 +11,9 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    Page<Post> findAllByOrderByScoreDesc(Pageable pageable);
-    Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    Page<Post> findByScoreGreaterThanEqualOrderByScoreDesc(int score, Pageable pageable);
+    Page<Post> findByScoreOrderByCreatedAtDesc(int score, Pageable pageable);
     Page<Post> findByUserOrderByCreatedAtDesc(User user, Pageable pageable);
+
+    List<Post> findByScoreGreaterThanEqual(int score);
 }

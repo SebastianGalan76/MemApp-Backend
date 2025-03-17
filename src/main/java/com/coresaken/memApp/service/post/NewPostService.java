@@ -63,7 +63,7 @@ public class NewPostService {
         post.setCreatorIp(request.getRemoteAddr());
 
         post.setCreatedAt(now);
-        post.setScore(postScoreService.calculateScore(post));
+        post.setScore(-1);
 
         postRepository.save(post);
         postFlagService.setPostFlag(post, newPostDto.flags());

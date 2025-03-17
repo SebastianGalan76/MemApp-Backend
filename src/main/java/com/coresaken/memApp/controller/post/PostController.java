@@ -20,6 +20,11 @@ public class PostController {
         return postService.getHomePosts(page, request);
     }
 
+    @GetMapping("post/waiting/{page}")
+    public Page<PostDto> getWaitingRoomPosts(@PathVariable("page") int page, HttpServletRequest request){
+        return postService.getWaitingRoomPosts(page, request);
+    }
+
     @GetMapping("post/{id}")
     public ResponseEntity<PostDto> getPostDtoById(@PathVariable("id") Long id, HttpServletRequest request){
         return postService.getPostDto(id, request);

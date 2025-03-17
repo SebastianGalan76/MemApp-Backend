@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostRatingService {
     final UserService userService;
+    final PostScoreService postScoreService;
 
     final PostRepository postRepository;
     final PostRatingRepository postRatingRepository;
@@ -58,6 +59,17 @@ public class PostRatingService {
             }
             else if(postRating.getRatingValue() == -1){
                 post.setDislikeAmount(post.getDislikeAmount() + 1);
+            }
+
+            if(post.getScore() == -1){
+                int totalRating = post.getLikeAmount() + post.getDislikeAmount();
+
+                //TODO Changing value
+                if(totalRating >= 1){
+                    if((float)(post.getLikeAmount() / totalRating) >= 0.75f){
+                        post.setScore(postScoreService.calculateScore(post));
+                    }
+                }
             }
 
             postRepository.save(post);

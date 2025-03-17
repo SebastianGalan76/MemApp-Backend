@@ -34,7 +34,23 @@ public class PostService {
         String userIp = request.getRemoteAddr();
 
         Pageable pageable = PageRequest.of(page, 15);
-        Page<Post> posts = postRepository.findAllByOrderByScoreDesc(pageable);
+        Page<Post> posts = postRepository.findByScoreGreaterThanEqualOrderByScoreDesc(0, pageable);
+
+        List<PostDto> result = posts.getContent().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+
+        return new PageImpl<>(result, pageable, posts.getTotalElements());
+    }
+
+    public Page<PostDto> getWaitingRoomPosts(int page, HttpServletRequest request) {
+        if(page<0){
+            return null;
+        }
+
+        User user = userService.getLoggedInUser();
+        String userIp = request.getRemoteAddr();
+
+        Pageable pageable = PageRequest.of(page, 15);
+        Page<Post> posts = postRepository.findByScoreOrderByCreatedAtDesc(-1, pageable);
 
         List<PostDto> result = posts.getContent().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
 

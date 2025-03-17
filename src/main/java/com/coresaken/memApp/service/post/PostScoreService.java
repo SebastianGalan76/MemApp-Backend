@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -30,7 +29,7 @@ public class PostScoreService {
 
     @Scheduled(fixedRate = 900000)
     public void updateScores() {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findByScoreGreaterThanEqual(0);
         for (Post post : posts) {
             post.setScore(calculateScore(post));
             postRepository.save(post);
