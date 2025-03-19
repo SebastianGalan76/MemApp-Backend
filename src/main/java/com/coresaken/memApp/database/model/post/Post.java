@@ -2,6 +2,7 @@ package com.coresaken.memApp.database.model.post;
 
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
+import com.coresaken.memApp.database.model.hashtag.HashtagUsage;
 import com.coresaken.memApp.database.model.list.UserPostList;
 import com.coresaken.memApp.database.model.list.UserPostListPost;
 import jakarta.annotation.Nullable;
@@ -57,13 +58,16 @@ public class Post {
     private List<PostRating> postRatingList;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPostListPost> userPostListPosts = new ArrayList<>();
+    private List<UserPostListPost> userPostListPosts;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostFlag> flags;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HashtagUsage> hashtags;
 
     public enum Type{
         IMAGE, TIKTOK, INSTAGRAM, X;

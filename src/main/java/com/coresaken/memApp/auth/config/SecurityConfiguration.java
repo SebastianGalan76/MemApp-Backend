@@ -30,7 +30,8 @@ public class SecurityConfiguration {
                             "/uploads/post/**",
                             "/uploads/user/avatar/**",
                             "/comment/**",
-                            "/post-flag")
+                            "/post-flag",
+                            "/hashtag/popular")
                     .permitAll()
                     .anyRequest().authenticated();
         });

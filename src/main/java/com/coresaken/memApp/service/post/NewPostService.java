@@ -4,6 +4,7 @@ import com.coresaken.memApp.data.dto.NewPostDto;
 import com.coresaken.memApp.data.response.Response;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.post.PostRepository;
+import com.coresaken.memApp.service.hashtag.HashtagService;
 import com.coresaken.memApp.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +25,9 @@ public class NewPostService {
     final UserService userService;
     final PostFileService postFileService;
     final PostScoreService postScoreService;
+
     final PostFlagService postFlagService;
+    final HashtagService hashtagService;
 
     final PostRepository postRepository;
 
@@ -66,7 +71,9 @@ public class NewPostService {
         post.setScore(-1);
 
         postRepository.save(post);
+
         postFlagService.setPostFlag(post, newPostDto.flags());
+        hashtagService.setPostHashtag(post, newPostDto.hashtags());
 
         return Response.ok("Stworzono prawidłowo nowy post");
     }
