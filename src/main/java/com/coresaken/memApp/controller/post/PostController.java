@@ -25,6 +25,11 @@ public class PostController {
         return postService.getWaitingRoomPosts(page, request);
     }
 
+    @GetMapping("post/tag/{tag}/{page}")
+    public Page<PostDto> getPostsByHashtag(@PathVariable("tag") String tag, @PathVariable("page") int page, HttpServletRequest request){
+        return postService.getPostsByTag(tag, page, request);
+    }
+
     @GetMapping("post/{id}")
     public ResponseEntity<PostDto> getPostDtoById(@PathVariable("id") Long id, HttpServletRequest request){
         return postService.getPostDto(id, request);

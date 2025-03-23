@@ -57,6 +57,22 @@ public class PostService {
         return new PageImpl<>(result, pageable, posts.getTotalElements());
     }
 
+    public Page<PostDto> getPostsByTag(String hashtag, int page, HttpServletRequest request) {
+        if(page<0){
+            return null;
+        }
+
+        User user = userService.getLoggedInUser();
+        String userIp = request.getRemoteAddr();
+
+        Pageable pageable = PageRequest.of(page, 15);
+        Page<Post> posts = postRepository.findPostsByHashtag(hashtag, pageable);
+
+        List<PostDto> result = posts.getContent().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+
+        return new PageImpl<>(result, pageable, posts.getTotalElements());
+    }
+
     public ResponseEntity<PostDto> getPostDto(Long id, HttpServletRequest request) {
         Optional<Post> postOptional = postRepository.findById(id);
         if(postOptional.isEmpty()){

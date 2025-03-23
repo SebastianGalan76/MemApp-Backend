@@ -1,7 +1,7 @@
 package com.coresaken.memApp.database.model;
 
 import com.coresaken.memApp.database.model.comment.Comment;
-import com.coresaken.memApp.database.model.list.UserPostList;
+import com.coresaken.memApp.database.model.collection.UserCollection;
 import com.coresaken.memApp.database.model.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,7 +42,7 @@ public class User implements UserDetails {
     private List<Post> postList;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<UserPostList> ownerPostList;
+    private List<UserCollection> ownerPostList;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;

@@ -1,7 +1,6 @@
-package com.coresaken.memApp.database.model.list;
+package com.coresaken.memApp.database.model.collection;
 
 import com.coresaken.memApp.database.model.User;
-import com.coresaken.memApp.database.model.post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPostList {
+public class UserCollection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,10 +37,10 @@ public class UserPostList {
     @ToString.Exclude
     private User owner;
 
-    @OneToMany(mappedBy = "userPostList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userCollection", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
-    private List<UserPostListPost> savedPosts = new ArrayList<>();
+    private List<UserCollectionPost> savedPosts = new ArrayList<>();
 
 
     public enum Accessibility{

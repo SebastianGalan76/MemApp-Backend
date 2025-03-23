@@ -3,8 +3,7 @@ package com.coresaken.memApp.database.model.post;
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.hashtag.HashtagUsage;
-import com.coresaken.memApp.database.model.list.UserPostList;
-import com.coresaken.memApp.database.model.list.UserPostListPost;
+import com.coresaken.memApp.database.model.collection.UserCollectionPost;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +56,7 @@ public class Post {
     private List<PostRating> postRatingList;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPostListPost> userPostListPosts;
+    private List<UserCollectionPost> userCollectionPosts;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;

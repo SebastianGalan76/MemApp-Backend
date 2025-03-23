@@ -5,7 +5,7 @@ import com.coresaken.memApp.data.dto.UserProfileDto;
 import com.coresaken.memApp.data.mapper.PostDtoMapper;
 import com.coresaken.memApp.data.response.ObjectResponse;
 import com.coresaken.memApp.database.model.User;
-import com.coresaken.memApp.database.model.list.UserPostList;
+import com.coresaken.memApp.database.model.collection.UserCollection;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.UserRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;
@@ -46,7 +46,7 @@ public class UserProfileService {
         userProfileDto.setUserList(user
                 .getOwnerPostList()
                 .stream()
-                .filter(list -> list.getAccessibility() == UserPostList.Accessibility.PUBLIC)
+                .filter(list -> list.getAccessibility() == UserCollection.Accessibility.PUBLIC)
                 .map(list -> new UserProfileDto.PostListDto(list.getId(), list.getUuid(), list.getName(), list.getSavedPosts().size()))
                 .toList()
         );
