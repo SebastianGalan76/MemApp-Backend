@@ -44,7 +44,7 @@ public class UserProfileService {
         userProfileDto.setRole(user.getRole());
 
         userProfileDto.setUserList(user
-                .getOwnerPostList()
+                .getOwnedCollectionList()
                 .stream()
                 .filter(list -> list.getAccessibility() == UserCollection.Accessibility.PUBLIC)
                 .map(list -> new UserProfileDto.PostListDto(list.getId(), list.getUuid(), list.getName(), list.getSavedPosts().size()))

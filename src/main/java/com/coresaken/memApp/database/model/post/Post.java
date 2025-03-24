@@ -1,5 +1,6 @@
 package com.coresaken.memApp.database.model.post;
 
+import com.coresaken.memApp.database.model.Report;
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.hashtag.HashtagUsage;
@@ -66,6 +67,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HashtagUsage> hashtags;
+
+    @OneToMany(mappedBy = "reportedPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Report> reportList;
 
     public enum Type{
         IMAGE, TIKTOK, INSTAGRAM, X;

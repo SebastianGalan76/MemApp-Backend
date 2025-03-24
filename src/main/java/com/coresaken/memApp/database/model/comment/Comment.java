@@ -1,5 +1,6 @@
 package com.coresaken.memApp.database.model.comment;
 
+import com.coresaken.memApp.database.model.Report;
 import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.model.post.PostRating;
@@ -45,4 +46,7 @@ public class Comment {
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentRating> commentRatingList;
+
+    @OneToMany(mappedBy = "reportedComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Report> reportList;
 }

@@ -20,7 +20,7 @@ public class UserDtoMapper {
         userDto.setRole(user.getRole().toString());
         userDto.setAvatar(user.getAvatar());
 
-        userDto.setOwnedCollections(user.getOwnerPostList());
+        userDto.setOwnedCollections(user.getOwnedCollectionList());
         return userDto;
     }
 }
