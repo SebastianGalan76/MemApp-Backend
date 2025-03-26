@@ -35,6 +35,7 @@ public class UserProfileService {
             return ObjectResponse.badRequest(1, "Brak profilu");
         }
 
+        User loggedInUser = userService.getLoggedInUser();
         User user = userOptional.get();
 
         UserProfileDto userProfileDto = new UserProfileDto();
@@ -42,6 +43,10 @@ public class UserProfileService {
         userProfileDto.setLogin(user.getLogin());
         userProfileDto.setAvatar(user.getAvatar());
         userProfileDto.setRole(user.getRole());
+
+        if(loggedInUser != null){
+            userProfileDto.setFollowing(user.getFollowers().contains(loggedInUser));
+        }
 
         userProfileDto.setUserList(user
                 .getOwnedCollectionList()

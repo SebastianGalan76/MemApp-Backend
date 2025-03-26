@@ -32,7 +32,8 @@ public class SecurityConfiguration {
                             "/comment/**",
                             "/post-flag",
                             "/hashtag/popular",
-                            "/report")
+                            "/report",
+                            "/follow/**")
                     .permitAll()
                     .anyRequest().authenticated();
         });

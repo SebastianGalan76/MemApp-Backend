@@ -17,6 +17,8 @@ public class UserProfileDto {
     String avatar;
     User.Role role;
 
+    boolean following;
+
     List<PostListDto> userList;
 
     public record PostListDto(Long id, UUID uuid, String name, int postAmount){
