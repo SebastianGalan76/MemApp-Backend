@@ -21,4 +21,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findPostsByHashtag(@Param("tag") String tag, Pageable pageable);
 
     List<Post> findByScoreGreaterThanEqual(int score);
+
+    @Query("SELECT p FROM Post p WHERE p.user IN :followingUsers ORDER BY p.id DESC")
+    Page<Post> findPostsByFollowingUsers(List<User> followingUsers, Pageable pageable);
 }
