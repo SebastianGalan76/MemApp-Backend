@@ -5,8 +5,8 @@ import com.coresaken.memApp.database.model.User;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.model.post.PostRating;
 import com.coresaken.memApp.database.repository.post.PostRatingRepository;
+import com.coresaken.memApp.database.repository.post.PostRepository;
 import com.coresaken.memApp.service.user.UserService;
-import com.coresaken.memApp.service.post.NewPostService;
 import com.coresaken.memApp.service.post.PostRatingService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
@@ -27,9 +27,10 @@ public class PostRatingServiceTest {
     @Mock
     private UserService userService;
     @Mock
-    private NewPostService newPostService;
-    @Mock
     private PostRatingRepository repository;
+
+    @Mock
+    private PostRepository postRepository;
 
     @Mock
     private HttpServletRequest request;
@@ -57,7 +58,7 @@ public class PostRatingServiceTest {
     @Test
     public void rate_incorrectPostId(){
         Long postId = 1L;
-        when(newPostService.findById(postId)).thenReturn(Optional.empty());
+        when(postRepository.findById(postId)).thenReturn(Optional.empty());
 
         ResponseEntity<Response> responseEntity = postRatingService.rate(postId, (byte) 1, request);
         assertEquals(400, responseEntity.getStatusCode().value());
@@ -73,7 +74,7 @@ public class PostRatingServiceTest {
         Post post = new Post();
         User user = new User();
 
-        when(newPostService.findById(1L)).thenReturn(Optional.of(post));
+        when(postRepository.findById(1L)).thenReturn(Optional.of(post));
         when(userService.getLoggedInUser()).thenReturn(user);
 
         PostRating postRating = new PostRating();
@@ -90,7 +91,7 @@ public class PostRatingServiceTest {
         Post post = new Post();
         User user = new User();
 
-        when(newPostService.findById(1L)).thenReturn(Optional.of(post));
+        when(postRepository.findById(1L)).thenReturn(Optional.of(post));
         when(userService.getLoggedInUser()).thenReturn(user);
 
         PostRating postRating = new PostRating();
