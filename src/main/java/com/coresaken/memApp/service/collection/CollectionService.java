@@ -93,7 +93,6 @@ public class CollectionService {
             userCollectionPost = new UserCollectionPost();
             userCollectionPost.setUserCollection(postList);
             userCollectionPost.setPost(post);
-            userCollectionPost.setAddedAt(LocalDateTime.now());
 
             userCollectionPostRepository.save(userCollectionPost);
         }

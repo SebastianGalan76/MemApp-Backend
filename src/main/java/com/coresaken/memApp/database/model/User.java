@@ -3,6 +3,7 @@ package com.coresaken.memApp.database.model;
 import com.coresaken.memApp.database.model.comment.Comment;
 import com.coresaken.memApp.database.model.collection.UserCollection;
 import com.coresaken.memApp.database.model.post.Post;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,16 +37,15 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_followers",
-            joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "following_id")
-    )
-    private Set<User> following = new HashSet<>();
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<UserFollowRelation> following;
 
-    @ManyToMany(mappedBy = "following")
-    private Set<User> followers = new HashSet<>();
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<UserFollowRelation> followers;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> postList;
@@ -98,8 +98,11 @@ public class User implements UserDetails {
     }
 
     public void follow(User user) {
-        following.add(user);
-        user.getFollowers().add(this);
+        UserFollowRelation userFollowRelation = new UserFollowRelation();
+        userFollowRelation.setFollowing(user);
+        userFollowRelation.setFollower(this);
+
+        following.add(userFollowRelation);
     }
 
     public void unfollow(User user) {

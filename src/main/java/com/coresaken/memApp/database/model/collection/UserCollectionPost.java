@@ -25,5 +25,5 @@ public class UserCollectionPost {
     @JoinColumn(name = "post_id", nullable = false)
     Post post;
 
-    LocalDateTime addedAt;
+    LocalDateTime addedAt = LocalDateTime.now();
 }

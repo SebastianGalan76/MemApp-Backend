@@ -5,6 +5,7 @@ import com.coresaken.memApp.data.dto.UserProfileDto;
 import com.coresaken.memApp.data.mapper.PostDtoMapper;
 import com.coresaken.memApp.data.response.ObjectResponse;
 import com.coresaken.memApp.database.model.User;
+import com.coresaken.memApp.database.model.UserFollowRelation;
 import com.coresaken.memApp.database.model.collection.UserCollection;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.UserRepository;
@@ -45,7 +46,9 @@ public class UserProfileService {
         userProfileDto.setRole(user.getRole());
 
         if(loggedInUser != null){
-            userProfileDto.setFollowing(user.getFollowers().contains(loggedInUser));
+            boolean isFollowing = user.getFollowing().stream()
+                    .anyMatch(ufr -> ufr.getFollower().equals(loggedInUser));
+            userProfileDto.setFollowing(isFollowing);
         }
 
         userProfileDto.setUserList(user
