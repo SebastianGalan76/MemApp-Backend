@@ -1,5 +1,6 @@
 package com.coresaken.memApp.data.dto;
 
+import com.coresaken.memApp.database.model.collection.UserCollection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class UserCollectionDto {
 
     String name;
     AuthorDto author;
+    UserCollection.Accessibility accessibility;
 
     Page<PostDto> content;
 }

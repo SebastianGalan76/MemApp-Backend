@@ -20,8 +20,8 @@ public class NewPostController {
 
     @PostMapping("/post/create")
     public ResponseEntity<Response> createPost(
-            @RequestParam("newPostDto") String newPostDtoJson,
-            @RequestParam(value = "contentFile", required = false) MultipartFile contentFile,
+            @RequestPart("newPostDto") String newPostDtoJson,
+            @RequestPart(value = "contentFile", required = false) MultipartFile contentFile,
             HttpServletRequest request) throws JsonProcessingException {
         return newPostservice.createPost(objectMapper.readValue(newPostDtoJson, NewPostDto.class), contentFile, request);
     }

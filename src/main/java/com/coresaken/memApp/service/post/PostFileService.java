@@ -25,7 +25,7 @@ import java.util.UUID;
 @Service
 public class PostFileService {
     private final List<String> ALLOWED_TYPES = Arrays.asList("image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp");
-    private final long MAX_FILE_SIZE = 4 * 1024 * 1024;
+    private final long MAX_FILE_SIZE = 400 * 1024 * 1024;
     private final String UPLOAD_DIR = System.getProperty("user.dir");
 
     public ResponseEntity<Response> upload(LocalDateTime time, MultipartFile file) {

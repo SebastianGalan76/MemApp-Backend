@@ -72,7 +72,7 @@ public class Post {
     private List<Report> reportList;
 
     public enum Type{
-        IMAGE, TIKTOK, INSTAGRAM, X;
+        IMAGE, TIKTOK, INSTAGRAM, X, YOUTUBE;
     }
     public enum Visibility{
         PUBLIC, NOT_PUBLIC, PRIVATE

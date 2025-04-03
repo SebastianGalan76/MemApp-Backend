@@ -1,4 +1,4 @@
-package com.coresaken.memApp.service.list;
+package com.coresaken.memApp.service.collection;
 
 import com.coresaken.memApp.data.dto.AuthorDto;
 import com.coresaken.memApp.data.dto.PostDto;
@@ -11,7 +11,7 @@ import com.coresaken.memApp.database.model.collection.UserCollection;
 import com.coresaken.memApp.database.model.collection.UserCollectionPost;
 import com.coresaken.memApp.database.model.post.Post;
 import com.coresaken.memApp.database.repository.collection.UserCollectionPostRepository;
-import com.coresaken.memApp.database.repository.collection.UserCollectionRepository;
+import com.coresaken.memApp.database.repository.collection.CollectionRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;
 import com.coresaken.memApp.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,10 +30,10 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserPostListService {
+public class CollectionService {
     final UserService userService;
 
-    final UserCollectionRepository userCollectionRepository;
+    final CollectionRepository collectionRepository;
     final UserCollectionPostRepository userCollectionPostRepository;
     final PostRepository postRepository;
 
@@ -61,12 +61,12 @@ public class UserPostListService {
         userCollection.setUuid(UUID.randomUUID());
         userCollection.setOwner(user);
 
-        userCollection = userCollectionRepository.save(userCollection);
+        userCollection = collectionRepository.save(userCollection);
         return ObjectResponse.ok("Stworzono poprawnie nową kolekcję.", userCollection);
     }
 
     public ResponseEntity<Response> save(Long postID, Long listID) {
-        UserCollection postList = userCollectionRepository.findById(listID).orElse(null);
+        UserCollection postList = collectionRepository.findById(listID).orElse(null);
         if(postList == null){
             return Response.badRequest(1, "Nie znaleziono kolekcji o podanym ID. Kolekcja została prawdopodobnie usunięta!");
         }
@@ -109,7 +109,7 @@ public class UserPostListService {
             return ObjectResponse.badRequest(1, "Nie ma kolekcji o podanym UUID.");
         }
 
-        Optional<UserCollection> userPostListOptional = userCollectionRepository.findByUuid(uuid);
+        Optional<UserCollection> userPostListOptional = collectionRepository.findByUuid(uuid);
         if(userPostListOptional.isEmpty()){
             return ObjectResponse.badRequest(1, "Nie ma kolekcji o podanym UUID.");
         }
@@ -127,6 +127,7 @@ public class UserPostListService {
         UserCollectionDto userCollectionDto = new UserCollectionDto();
         userCollectionDto.setAuthor(new AuthorDto(owner.getId(), owner.getLogin(), owner.getAvatar()));
         userCollectionDto.setId(userCollection.getId());
+        userCollectionDto.setAccessibility(userCollection.getAccessibility());
         userCollectionDto.setUuid(userCollection.getUuid());
         userCollectionDto.setName(userCollection.getName());
 

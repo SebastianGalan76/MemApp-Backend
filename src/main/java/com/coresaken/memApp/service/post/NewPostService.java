@@ -33,7 +33,7 @@ public class NewPostService {
 
     public ResponseEntity<Response> createPost(NewPostDto newPostDto, MultipartFile contentFile, HttpServletRequest request) {
         if(newPostDto.text() != null && newPostDto.text().length() > 255){
-            return Response.badRequest(1, "Tekst postu jest zbyt długi");
+            return Response.badRequest(1, "Tekst jest zbyt długi");
         }
         LocalDateTime now = LocalDateTime.now();
 
@@ -59,8 +59,8 @@ public class NewPostService {
             }
         }
         else{
-            if (post.getType() == Post.Type.TIKTOK){
-                post.setContent(newPostDto.content());
+            switch (post.getType()){
+                case TIKTOK, X, YOUTUBE -> post.setContent(newPostDto.content());
             }
         }
 
