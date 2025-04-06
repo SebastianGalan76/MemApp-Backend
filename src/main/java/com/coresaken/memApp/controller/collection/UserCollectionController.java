@@ -26,7 +26,11 @@ public class UserCollectionController {
     }
 
     @GetMapping("/collection/{uuid}/{page}")
-    public ResponseEntity<ObjectResponse<UserCollectionDto>> getUserCollection(@PathVariable("uuid") String uuid, @PathVariable("page") int page, HttpServletRequest request){
+    public ResponseEntity<ObjectResponse<UserCollectionDto>> getUserCollection(
+            @PathVariable("uuid") String uuid, @PathVariable("page") int page,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "addedAt") String sortBy,
+            @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
+            HttpServletRequest request){
         return service.getCollection(uuid, page, request);
     }
 }

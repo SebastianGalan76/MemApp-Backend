@@ -24,4 +24,17 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.user IN :followingUsers ORDER BY p.id DESC")
     Page<Post> findPostsByFollowingUsers(List<User> followingUsers, Pageable pageable);
+
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.score = -1 " +
+            "ORDER BY p.createdAt ASC")
+    Page<Post> findWaitingPostSortedByCreatedAtAsc(Pageable pageable);
+
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.score = -1 " +
+            "ORDER BY p.createdAt DESC")
+    Page<Post> findWaitingPostSortedByCreatedAtDesc(Pageable pageable);
+
+    @Query("SELECT p FROM Post p WHERE p.score = -1 ORDER BY RANDOM()")
+    Page<Post> findAllWaitingPostRandomOrder(Pageable pageable);
 }

@@ -11,16 +11,14 @@ import com.coresaken.memApp.database.repository.UserRepository;
 import com.coresaken.memApp.database.repository.post.PostRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -103,7 +101,7 @@ public class FollowService {
         return new PageImpl<>(result, pageable, posts.getTotalElements());
     }
 
-    public Page<UserDto> getUsers(int page) {
+    public Page<UserDto> getUsers(int page, String sortBy, String order) {
         if(page<0){
             return null;
         }
@@ -113,24 +111,36 @@ public class FollowService {
             return null;
         }
 
-        User user = userRepository.findById(loggedInUser.getId()).orElse(null);
-        if(user == null){
-            return null;
-        }
-
-        if(user.getFollowing() == null){
-            return null;
-        }
-
-        List<UserDto> result = user.getFollowers().stream().map(u -> {
-            UserDto userDto = new UserDto();
-            userDto.setId(u.getFollowing().getId());
-            userDto.setLogin(u.getFollowing().getLogin());
-            userDto.setAvatar(u.getFollowing().getAvatar());
-            return userDto;
-        }).toList();
-
         Pageable pageable = PageRequest.of(page, 15);
-        return new PageImpl<>(result, pageable, user.getFollowers().size());
+        Page<User> userPage = null;
+
+        if ("followedAt".equalsIgnoreCase(sortBy)) {
+            if ("desc".equalsIgnoreCase(order)) {
+                userPage = userRepository.findFollowingSortedByFollowedAtDesc(loggedInUser, pageable);
+            } else {
+                userPage = userRepository.findFollowingSortedByFollowedAtAsc(loggedInUser, pageable);
+            }
+        }
+        else if ("login".equalsIgnoreCase(sortBy)) {
+            if ("desc".equalsIgnoreCase(order)) {
+                userPage = userRepository.findFollowingSortedByLoginDesc(loggedInUser, pageable);
+            } else {
+                userPage = userRepository.findFollowingSortedByLoginAsc(loggedInUser, pageable);
+            }
+        }
+
+        if (userPage == null) {
+            return Page.empty();
+        }
+
+        List<UserDto> userDtoList = userPage.stream().map(u -> {
+            UserDto userDto = new UserDto();
+            userDto.setId(u.getId());
+            userDto.setLogin(u.getLogin());
+            userDto.setAvatar(u.getAvatar());
+            return userDto;
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(userDtoList, pageable, userPage.getTotalElements());
     }
 }

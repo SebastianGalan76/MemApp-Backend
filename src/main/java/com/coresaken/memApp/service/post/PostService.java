@@ -41,7 +41,7 @@ public class PostService {
         return new PageImpl<>(result, pageable, posts.getTotalElements());
     }
 
-    public Page<PostDto> getWaitingRoomPosts(int page, HttpServletRequest request) {
+    public Page<PostDto> getWaitingRoomPosts(int page, String sortBy, String order, HttpServletRequest request) {
         if(page<0){
             return null;
         }
@@ -49,12 +49,26 @@ public class PostService {
         User user = userService.getLoggedInUser();
         String userIp = request.getRemoteAddr();
 
-        Pageable pageable = PageRequest.of(page, 15);
-        Page<Post> posts = postRepository.findByScoreOrderByCreatedAtDesc(-1, pageable);
+        Pageable pageable = PageRequest.of(page, 150);
+        Page<Post> postPage = null;
+        if ("createdAt".equalsIgnoreCase(sortBy)) {
+            if ("desc".equalsIgnoreCase(order)) {
+                postPage = postRepository.findWaitingPostSortedByCreatedAtDesc(pageable);
+            } else {
+                postPage = postRepository.findWaitingPostSortedByCreatedAtAsc(pageable);
+            }
+        }
+        else if("random".equalsIgnoreCase(sortBy)){
+            postPage = postRepository.findAllWaitingPostRandomOrder(pageable);
+        }
 
-        List<PostDto> result = posts.getContent().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+        if (postPage == null) {
+            return Page.empty();
+        }
 
-        return new PageImpl<>(result, pageable, posts.getTotalElements());
+        List<PostDto> result = postPage.getContent().stream().map(post -> PostDtoMapper.toDTO(post, user, userIp)).toList();
+
+        return new PageImpl<>(result, pageable, postPage.getTotalElements());
     }
 
     public Page<PostDto> getPostsByTag(String hashtag, int page, HttpServletRequest request) {

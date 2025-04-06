@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +26,10 @@ public class FollowController {
     }
 
     @GetMapping("/follow/user/{page}")
-    public Page<UserDto> getUsers(@PathVariable("page") int page){
-        return followService.getUsers(page);
+    public Page<UserDto> getUsers(
+            @PathVariable("page") int page,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "followedAt") String sortBy,
+            @RequestParam(value = "order", required = false, defaultValue = "desc") String order){
+        return followService.getUsers(page, sortBy, order);
     }
 }

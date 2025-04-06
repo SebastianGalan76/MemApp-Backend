@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,8 +22,12 @@ public class PostController {
     }
 
     @GetMapping("post/waiting/{page}")
-    public Page<PostDto> getWaitingRoomPosts(@PathVariable("page") int page, HttpServletRequest request){
-        return postService.getWaitingRoomPosts(page, request);
+    public Page<PostDto> getWaitingRoomPosts(
+            @PathVariable("page") int page,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "createdAt") String sortBy,
+            @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
+            HttpServletRequest request){
+        return postService.getWaitingRoomPosts(page, sortBy, order, request);
     }
 
     @GetMapping("post/tag/{tag}/{page}")
